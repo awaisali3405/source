@@ -342,6 +342,18 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  getTraceAttributes(parameters : HttpParams) {
+    let process = localStorage.getItem("process");
+    let sessionId = localStorage.getItem("sessionId");
+
+    parameters = parameters.set("process", process);
+    parameters = parameters.set("session", sessionId);
+
+    var completeUrl : string = this.webservicePath + "getTraceAttributes";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   getAttributeValues(attributeKey : string, parameters : HttpParams) {
     let process = localStorage.getItem("process");
     let sessionId = localStorage.getItem("sessionId");
