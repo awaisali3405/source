@@ -41,9 +41,6 @@ export class PrivacyRolesComponent implements OnInit {
     let selective_lower_bound_applied = true;
     let selective_upper_bound_applied = true;
 
-    console.log(this.technique);
-    console.log(this.selected_selective_option);
-
     if (this.selected_selective_option == "low") {
       selective_lower_bound_applied = true;
       selective_upper_bound_applied = false;
