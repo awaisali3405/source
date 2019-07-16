@@ -60,6 +60,8 @@ import {PmtkBpmnVisualizerComponent} from './real-ws/pmtk-bpmn-visualizer/pmtk-b
 import {LogSharingComponent} from './real-ws/log-sharing/log-sharing.component';
 import {PathsFilterComponent} from './real-ws/paths-filter/paths-filter.component';
 import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-dashboard.component';
+import {PrivacyMasterComponent} from './real-ws/privacy-master/privacy-master.component';
+import {PrivacyRolesComponent} from './real-ws/privacy-roles/privacy-roles.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -71,7 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent],
+    declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent, PrivacyRolesComponent],
     imports: [
         BrowserAnimationsModule,
         StoreModule.forRoot({}),
@@ -113,7 +115,7 @@ export function createTranslateLoader(http: HttpClient) {
         PerfectScrollbarModule
     ],
     entryComponents: [
-        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent
+        StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent, PrivacyRolesComponent
     ],
     providers: [
         AuthService,

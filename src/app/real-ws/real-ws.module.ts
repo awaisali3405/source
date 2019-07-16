@@ -22,9 +22,11 @@ import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import { PathsFilterComponent } from './paths-filter/paths-filter.component';
 import { ActivityDashboardComponent } from './activity-dashboard/activity-dashboard.component';
+import { PrivacyMasterComponent } from './privacy-master/privacy-master.component';
+import { PrivacyRolesComponent } from './privacy-roles/privacy-roles.component';
 
 @NgModule({
-  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent],
+  declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, PrivacyMasterComponent],
   imports: [
     CommonModule,
       RealWsRoutingModule,

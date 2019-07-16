@@ -12,4 +12,5 @@ export const ROUTES: RouteInfo[] = [
     { path: '/real-ws/statistics', title: 'Aggregated stats', icon: 'ft-trending-up', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
     { path: '/real-ws/sna', title: 'SNA', icon: 'ft-share-2', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
     { path: '/real-ws/transient', title: 'Transient Analysis', icon: 'ft-anchor', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
+    { path: '/real-ws/privacymaster', title: 'Privacy', icon: 'ft-hash', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
 ];

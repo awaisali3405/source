@@ -9,6 +9,7 @@ import { PlistComponent } from './plist/plist.component';
 import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
+import {PrivacyMasterComponent} from './privacy-master/privacy-master.component';
 
 const routes: Routes = [
     {
@@ -82,6 +83,13 @@ const routes: Routes = [
                 component: AlignmentsComponent,
                 data: {
                     title: 'Alignments'
+                }
+            },
+            {
+                path: 'privacymaster',
+                component: PrivacyMasterComponent,
+                data: {
+                    title: 'Privacy master'
                 }
             },
         ]
