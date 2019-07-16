@@ -26,6 +26,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   logoUrl = 'assets/img/logo.png';
   public config: any = {};
   layoutSub: Subscription;
+  public isAdmin : boolean = false;
 
 
   constructor(

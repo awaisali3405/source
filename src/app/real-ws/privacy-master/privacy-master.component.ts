@@ -14,12 +14,14 @@ import {PrivacyRolesComponent} from '../privacy-roles/privacy-roles.component';
 export class PrivacyMasterComponent implements OnInit {
   sanitizer: DomSanitizer;
   pm4pyService: Pm4pyService;
+  public isAdmin : boolean = false;
 
   constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
     this.pm4pyService = pm4pyServ;
     this.sanitizer = _sanitizer;
 
     this.authService.checkAuthentication().subscribe(data => {
+      this.isAdmin = data.isAdmin;
     });
   }
 
