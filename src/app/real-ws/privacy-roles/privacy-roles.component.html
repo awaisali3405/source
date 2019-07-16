@@ -1,5 +1,22 @@
 <h2 mat-dialog-title>Privacy-aware Role Mining</h2>
 <mat-dialog-content class="mat-typography">
+  <mat-select placeholder="Selected method" [(value)]="technique">
+    <mat-option value="fixed_value">Fixed Value</mat-option>
+    <mat-option value="selective">Selective</mat-option>
+    <mat-option value="frequency_based">Frequency based</mat-option>
+  </mat-select>
+  <br /><br />
+  <div [hidden]="!(technique == 'fixed_value')">
+    <h3>Parameters for Fixed Value technique</h3>
+    Number of substitutions: <input id="no_substitutions" matInput style="width: 80px; font-size: 13px" value="2"><br />
+  </div>
+  <div [hidden]="!(technique == 'selective')">
+    <h3>Parameters for Selective technique</h3>
+  </div>
+  <div [hidden]="!(technique == 'frequency_based')">
+    <h3>Parameters for Frequency-based technique</h3>
+    Fixed value: <input id="fixed_value" matInput style="width: 80px; font-size: 13px" value="0"><br />
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
