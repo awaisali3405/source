@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>Privacy-aware Role Mining</h2>
 <mat-dialog-content class="mat-typography">
+  Select the technique of privacy-aware role mining:<br />
   <mat-select placeholder="Selected method" [(value)]="technique">
     <mat-option value="fixed_value">Fixed Value</mat-option>
     <mat-option value="selective">Selective</mat-option>
@@ -12,11 +13,19 @@
   </div>
   <div [hidden]="!(technique == 'selective')">
     <h3>Parameters for Selective technique</h3>
+    <mat-radio-group aria-label="Selective options" [(value)]="selected_selective_option" (change)="changeSelectiveOption($event)">
+      <mat-radio-button value="lowup">Lower and Upper Bound</mat-radio-button>
+      <mat-radio-button value="low">Lower Bound</mat-radio-button>
+      <mat-radio-button value="up">Upper Bound</mat-radio-button>
+    </mat-radio-group>
   </div>
   <div [hidden]="!(technique == 'frequency_based')">
     <h3>Parameters for Frequency-based technique</h3>
     Fixed value: <input id="fixed_value" matInput style="width: 80px; font-size: 13px" value="0"><br />
   </div>
+  <br /><br />
+  <mat-checkbox [(checked)]="resource_aware" (change)="changeResourceAware()">Privacy-preserving is resource aware</mat-checkbox>
+  <mat-checkbox  [(checked)]="hashed_activities" (change)="changedHashedActivities()">Hash activities</mat-checkbox>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>

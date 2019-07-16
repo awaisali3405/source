@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {MatSliderModule} from '@angular/material';
+import {MatCheckboxModule, MatSliderModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
@@ -97,6 +97,7 @@ export function createTranslateLoader(http: HttpClient) {
         MatSortModule,
         MatCardModule,
         MatChipsModule,
+        MatCheckboxModule,
         MatInputModule,
         FormsModule,
         MatProgressSpinnerModule,
