@@ -461,7 +461,7 @@ export class Pm4pyService {
   }
 
   rolesPrivacyAware(parameters : HttpParams) {
-    let sessionId = localStorage.getItem("session");
+    let sessionId = localStorage.getItem("sessionId");
     let process = localStorage.getItem("process");
 
     parameters = parameters.set("session", sessionId);
