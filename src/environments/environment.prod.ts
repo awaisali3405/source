@@ -1,8 +1,8 @@
 export const environment = {
     production: true,
     webServicePath: 'http://' + window.location.hostname + ':80/',
-    enableUpload: true,
-    enableDownload: true,
+    enableUpload: false,
+    enableDownload: false,
     enableLogin: true,
     enableMD5cipheringPasswordsFrontend: true,
     maxNoVariantsForAlignments: 235,
