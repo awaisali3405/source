@@ -19,7 +19,7 @@
     <mat-option value="dfg">DFG</mat-option>
     <mat-option value="tree">Process Tree (Inductive)</mat-option>
     <mat-option value="inductive">Petri (Inductive)</mat-option>
-    <mat-option value="indbpmn">BPMN (Inductive)</mat-option>
+    <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
     <mat-option value="heuristics">Heuristics Net</mat-option>
   </mat-select>
   <span *ngIf="enableDownloadModel">
@@ -28,7 +28,7 @@
       <button mat-button (click)="downloadBpmnModel($event)"><span style="font-size: 10px">Download BPMN Model</span></button>
       <button mat-button (click)="visualizeBpmnModel($event)"><span style="font-size: 10px">Visualize BPMN Model</span></button>
     </span>
-    <span *ngIf="enableConformanceChecking">
+    <span *ngIf="enableConformanceChecking && overallEnableAlignments">
       <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>
       <button mat-button (click)="uploader.click()"><span style="font-size: 10px">Upload model for Conformance</span></button>
     </span>

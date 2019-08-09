@@ -60,6 +60,8 @@ export class PmodelComponent implements OnInit {
     public endActivities : any;
     public isStartActivity : boolean;
     public isEndActivity : boolean;
+    public overallEnableBPMN : boolean;
+    public overallEnableAlignments : boolean;
 
     constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private router: Router, private authService: AuthenticationServiceService, public dialog: MatDialog, private filterService: FilterServiceService) {
         /**
@@ -69,6 +71,9 @@ export class PmodelComponent implements OnInit {
         this.sanitizer = _sanitizer;
         this.pm4pyService = pm4pyServ;
         this.authenticationService = authService;
+
+        this.overallEnableBPMN = environment.overallEnableBPMN;
+        this.overallEnableAlignments = environment.overallEnableAlignments;
 
         this.decoration = localStorage.getItem("preferred_decoration");
         if (this.decoration == null || typeof(this.decoration) == "undefined") {

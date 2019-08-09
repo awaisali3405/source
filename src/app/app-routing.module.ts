@@ -9,10 +9,12 @@ import { CONTENT_ROUTES } from "./shared/routes/content-layout.routes";
 
 import { AuthGuard } from './shared/auth/auth-guard.service';
 
+import {environment} from '../environments/environment';
+
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'real-ws/plist',
+    redirectTo: environment.firstPage,
     pathMatch: 'full',
   },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },
