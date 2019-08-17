@@ -43,6 +43,7 @@ export class PmodelComponent implements OnInit {
     public ratioVariantsNumber = 100;
     public ratioCasesNumber = 100;
     public ratioEventsNumber = 100;
+    public enableProcessModelChoice : boolean = true;
     decoration = 'freq';
     typeOfModel = 'dfg';
     sanitizer: DomSanitizer;
@@ -84,6 +85,17 @@ export class PmodelComponent implements OnInit {
         if (this.typeOfModel == null || typeof(this.typeOfModel) == "undefined") {
             this.typeOfModel = "dfg";
         }
+
+        if (localStorage.getItem("smartFiltering") === null) {
+            localStorage.setItem("smartFiltering", "true");
+        }
+
+        if (localStorage.getItem("smartFiltering") === "false") {
+            this.simplicity = -5.0;
+            this.selectedSimplicity = -5.0;
+        }
+
+        this.enableProcessModelChoice = environment.overallEnableDifferentProcessSchemas;
 
         this.isStartActivity = false;
         this.isEndActivity = false;

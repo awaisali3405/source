@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
-import {MatChipsModule, MatIconModule} from '@angular/material';
+import {MatCheckboxModule, MatChipsModule, MatIconModule} from '@angular/material';
 
 //COMPONENTS
 import { FooterComponent } from "./footer/footer.component";
@@ -43,7 +43,8 @@ import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
         TranslateModule,
         PerfectScrollbarModule,
         MatChipsModule,
-        MatIconModule
+        MatIconModule,
+        MatCheckboxModule
     ],
     declarations: [
         FooterComponent,

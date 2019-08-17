@@ -60,6 +60,9 @@ export class CasesComponent implements OnInit, AfterViewInit {
     public ratioCasesNumber = 100;
     public ratioEventsNumber = 100;
 
+    maxRetCases : number = 400;
+    maxRetVariants : number = 100;
+
     @ViewChild(MatSort) casesSort: MatSort;
 
     constructor(private _sanitizer: DomSanitizer, private pm4pyServ: Pm4pyService, private authService: AuthenticationServiceService, public dialog: MatDialog) {
@@ -78,6 +81,14 @@ export class CasesComponent implements OnInit, AfterViewInit {
         this.authService.checkAuthentication().subscribe(data => {
         });
 
+        if (localStorage.getItem("smartFiltering") === null) {
+            localStorage.setItem("smartFiltering", "true");
+        }
+
+        if (localStorage.getItem("smartFiltering") === "false") {
+            this.maxRetVariants = 10000000;
+            this.maxRetCases = 10000000;
+        }
 
         this.getAllVariants();
         this.getAllCases();
@@ -142,6 +153,7 @@ export class CasesComponent implements OnInit, AfterViewInit {
         this.variantsLoading = true;
         this.isLoading = this.variantsLoading || this.casesLoading;
         let params: HttpParams = new HttpParams();
+        params = params.set("max_no_variants", ""+this.maxRetVariants);
         this.pm4pyService.getAllVariants(params).subscribe(data => {
             this.pm4pyJsonVariants = data as JSON;
             this.variants = this.pm4pyJsonVariants['variants'];
@@ -176,6 +188,8 @@ export class CasesComponent implements OnInit, AfterViewInit {
         if (this.variantSelected != null) {
             params = params.set('variant', this.variantSelected);
         }
+
+        params = params.set('max_no_cases', ""+this.maxRetCases);
 
         this.pm4pyService.getAllCases(params).subscribe(data => {
             this.pm4pyJsonCases = data as JSON;

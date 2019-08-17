@@ -15,7 +15,7 @@
     <mat-radio-button value="perf">Performance</mat-radio-button>
   </mat-radio-group>
   <br />
-  <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)">
+  <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice">
     <mat-option value="dfg">DFG</mat-option>
     <mat-option value="tree">Process Tree (Inductive)</mat-option>
     <mat-option value="inductive">Petri (Inductive)</mat-option>

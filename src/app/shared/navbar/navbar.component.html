@@ -64,7 +64,7 @@
                             <p class="d-none">upload log</p>
                         </a>
                     </li>
-                    <li class="nav-item mr-2  d-none d-lg-block" *ngIf="isAdmin && isPlistPage">
+                    <li class="nav-item mr-2  d-none d-lg-block" *ngIf="isAdmin && isPlistPage && enableSharing">
                         <a href="javascript:;" class="nav-link" id="navbar-share-log" (click)="shareLog()">
                             <i class="ft-share-2 font-medium-3 blue-grey darken-4"></i>
                             <p class="d-none">Share log</p>
@@ -84,6 +84,16 @@
                                 <i class="ft-arrow-down mr-2"></i>
                                 <span>Download CSV</span>
                             </a>
+                        </div>
+                    </li>
+                    <li class="nav-item" ngbDropdown [placement]="placement" *ngIf="isProcessModelPage">
+                        <a class="nav-link position-relative" id="options" ngbDropdownToggle>
+                            <i class="ft-octagon font-medium-3 blue-grey darken-4"></i>
+                            <p class="d-none">Options</p>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="text-left">
+                            <mat-checkbox [(checked)]="enableSmartFiltering" (change)="changeSmartFiltering()">Enable Smart Filtering</mat-checkbox>
+
                         </div>
                     </li>
                     <li class="nav-item" ngbDropdown [placement]="placement" *ngIf="isProcessModelPage">
