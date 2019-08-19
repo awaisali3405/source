@@ -19,6 +19,14 @@ export class FilterServiceService {
     this.retrieveFiltersFromLocalStorage();
   }
 
+  newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+          v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
   retrieveFiltersFromLocalStorage() {
     this.filtersPerProcess = localStorage.getItem("filtersPerProcess");
     if (this.filtersPerProcess == null) {
@@ -35,6 +43,8 @@ export class FilterServiceService {
 
   addFilter(filter_type : string, filter_value : any) {
     let httpParams : HttpParams = new HttpParams();
+    httpParams = httpParams.set("uniqueCallId", this.newGuid());
+
     this.thisProcess  = localStorage.getItem("process");
     console.log(this.filtersPerProcess);
     if (this.filtersPerProcess == null) {
@@ -69,6 +79,7 @@ export class FilterServiceService {
     this.filtersPerProcess[this.thisProcess].splice(thisIndex, 1);
     localStorage.setItem("filtersPerProcess", JSON.stringify(this.filtersPerProcess));
     let httpParams : HttpParams = new HttpParams();
+    httpParams = httpParams.set("uniqueCallId", this.newGuid());
     this.dialog.open(WaitingCircleComponentComponent);
 
     this.removeFilterPOST(filter, this.filtersPerProcess[this.thisProcess], httpParams).subscribe(data => {

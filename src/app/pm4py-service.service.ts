@@ -15,6 +15,14 @@ export class Pm4pyService {
     this.webservicePath = environment.webServicePath;
   }
 
+  newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+          v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
   getProcessSchema(parameters: HttpParams) {
     /**
      * Gets the process schema (with the provided parameters)
@@ -30,6 +38,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getProcessSchema";
 
@@ -51,6 +60,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getEventsPerTimeGraph";
 
@@ -72,6 +82,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getCaseDurationGraph";
 
@@ -92,6 +103,7 @@ export class Pm4pyService {
 
     let sessionId = localStorage.getItem("sessionId");
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     return this.http.get(completeUrl, {params: parameters});
   }
@@ -110,6 +122,7 @@ export class Pm4pyService {
 
     let sessionId = localStorage.getItem("sessionId");
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     return this.http.get(completeUrl, {params: parameters});
   }
@@ -129,6 +142,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "transientAnalysis";
 
@@ -150,6 +164,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getNumericAttributeGraph";
 
@@ -171,6 +186,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getAllVariants";
 
@@ -192,6 +208,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getAllCases";
 
@@ -213,6 +230,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getEvents";
 
@@ -234,6 +252,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getLogSummary";
 
@@ -256,6 +275,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getAlignmentsVisualizations";
 
@@ -268,6 +288,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "downloadCsvLog";
 
@@ -280,6 +301,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "downloadXesLog";
 
@@ -290,6 +312,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "uploadLog";
 
@@ -302,6 +325,7 @@ export class Pm4pyService {
     let httpParams : HttpParams = new HttpParams();
     httpParams = httpParams.set("user", username);
     httpParams = httpParams.set("password", password);
+    httpParams = httpParams.set("uniqueCallId", this.newGuid());
 
     return this.http.get(completeUrl, {params: httpParams});
   }
@@ -312,6 +336,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getStartActivities";
 
@@ -324,6 +349,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getEndActivities";
 
@@ -336,6 +362,7 @@ export class Pm4pyService {
 
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl : string = this.webservicePath + "getAttributesList";
 
@@ -361,6 +388,7 @@ export class Pm4pyService {
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
     parameters = parameters.set("attribute_key", attributeKey);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "getAttributeValues";
 
@@ -374,6 +402,7 @@ export class Pm4pyService {
     parameters = parameters.set("process", process);
     parameters = parameters.set("session", sessionId);
     parameters = parameters.set("attribute_key", attributeKey);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "getAllPaths";
 
@@ -384,6 +413,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "getUserEventLogVisibility";
 
@@ -394,6 +424,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "addUserLogVisibility";
 
@@ -404,6 +435,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "removeUserLogVisibility";
 
@@ -414,6 +446,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "addUserLogDownloadable";
 
@@ -424,6 +457,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "removeUserLogDownloadable";
 
@@ -434,6 +468,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "addUserLogRemovable";
 
@@ -444,6 +479,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "removeUserLogRemovable";
 
@@ -454,6 +490,7 @@ export class Pm4pyService {
     let sessionId = localStorage.getItem("sessionId");
 
     parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("uniqueCallId", this.newGuid());
 
     var completeUrl: string = this.webservicePath + "deleteEventLog";
 
