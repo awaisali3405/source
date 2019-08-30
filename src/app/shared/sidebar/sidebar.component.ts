@@ -38,6 +38,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     private configService: ConfigService,
     private layoutService: LayoutService
   ) {
+
     if (this.depth === undefined) {
       this.depth = 0;
       this.expanded = true;

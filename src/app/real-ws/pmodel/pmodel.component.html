@@ -1,49 +1,43 @@
-<div class="p-2">
+<div>
   Variants: <b>{{thisVariantsNumber}}</b>
-  <mat-progress-bar mode="determinate" value="{{ratioVariantsNumber}}"></mat-progress-bar>
   Cases: <b>{{thisCasesNumber}}</b>
-  <mat-progress-bar mode="determinate" value="{{ratioCasesNumber}}"></mat-progress-bar>
   Events: <b>{{thisEventsNumber}}</b>
-  <mat-progress-bar mode="determinate" value="{{ratioEventsNumber}}"></mat-progress-bar>
+    &nbsp;&nbsp;&nbsp;Simplicity:&nbsp;
+    <mat-slider min="-5.0" max="0" step="0.001" [(value)]="simplicity" (change)="sliderIsChanged($event)"></mat-slider>
+Decoration:&nbsp;
+<mat-radio-group (change)="decorationIsChanged($event)" [value]="decoration">
+  <mat-radio-button value="freq">Frequency</mat-radio-button>
+  <mat-radio-button value="perf">Performance</mat-radio-button>
+</mat-radio-group>
+    <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice" style="display: inline-block">
+      <mat-option value="dfg">DFG</mat-option>
+      <mat-option value="tree">Process Tree (Inductive)</mat-option>
+      <mat-option value="inductive">Petri (Inductive)</mat-option>
+      <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
+      <mat-option value="heuristics">Heuristics Net</mat-option>
+    </mat-select>
 </div>
-<div class="p-2">
-  Simplicity:&nbsp;
-  <mat-slider min="-5.0" max="0" step="0.001" [(value)]="simplicity" (change)="sliderIsChanged($event)"></mat-slider>
-  Decoration:&nbsp;
-  <mat-radio-group (change)="decorationIsChanged($event)" [value]="decoration">
-    <mat-radio-button value="freq">Frequency</mat-radio-button>
-    <mat-radio-button value="perf">Performance</mat-radio-button>
-  </mat-radio-group>
-  <br />
-  <mat-select placeholder="Type of model" [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice">
-    <mat-option value="dfg">DFG</mat-option>
-    <mat-option value="tree">Process Tree (Inductive)</mat-option>
-    <mat-option value="inductive">Petri (Inductive)</mat-option>
-    <mat-option value="indbpmn" *ngIf="overallEnableBPMN">BPMN (Inductive)</mat-option>
-    <mat-option value="heuristics">Heuristics Net</mat-option>
-  </mat-select>
-  <span *ngIf="enableDownloadModel">
-    <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>
-    <span *ngIf="enableBpmnDownload">
+<div *ngIf="enableDownloadModel">
+  <button mat-button (click)="downloadModel($event)"><span style="font-size: 10px">Download Petri Net Model</span></button>
+  <span *ngIf="enableBpmnDownload">
       <button mat-button (click)="downloadBpmnModel($event)"><span style="font-size: 10px">Download BPMN Model</span></button>
       <button mat-button (click)="visualizeBpmnModel($event)"><span style="font-size: 10px">Visualize BPMN Model</span></button>
     </span>
-    <span *ngIf="enableConformanceChecking && overallEnableAlignments">
+  <span *ngIf="enableConformanceChecking && overallEnableAlignments">
       <button mat-button routerLink="/real-ws/alignments"><span style="font-size: 10px">Conformance against Visualized Model</span></button>
       <button mat-button (click)="uploader.click()"><span style="font-size: 10px">Upload model for Conformance</span></button>
     </span>
-  </span>
 </div>
-<div id="imageContainer">
+<!--<div id="imageContainer">
   <div [hidden]="!dotProvided" id="dotProvidedDiv">
 
   </div>
   <div [hidden]="dotProvided" id="svgWithInnerHtml">
 
   </div>
-  <div *ngIf="false">
-    <img id="imageProcessModelImage" [src]="processModelBase64Sanitized">
-  </div>
+</div>-->
+<div [hidden]="!dotProvided" id="dotProvidedDiv" class="p-8">
+
 </div>
 <input hidden type="file" #uploader
        (change)="uploadFile($event)"/>

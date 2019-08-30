@@ -1,0 +1,28 @@
+.variants-explorer--title {
+  width: 100%;
+  height: fit-content;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.variants-explorer--title.mat-icon {
+  display: inline;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.variants-explorer--title__text {
+  font-size: x-large;
+}
+
+.variants-explorer--title__process {
+  line-height: 1;
+  font-size: medium;
+  color: #7a7a7a;
+}
+
+.variants-explorer--content {
+  padding: 0 20px 20px 20px;
+  height: fit-content;
+}

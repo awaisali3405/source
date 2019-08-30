@@ -10,6 +10,8 @@ import { SnaComponent } from './sna/sna.component';
 import { TransientComponent } from './transient/transient.component';
 import { AlignmentsComponent } from './alignments/alignments.component';
 import {PrivacyMasterComponent} from './privacy-master/privacy-master.component';
+import { VariantsExplorerComponent } from "./variants/variants-explorer/variants-explorer.component";
+import { DottedchartComponent } from './dottedchart/dottedchart.component';
 
 const routes: Routes = [
     {
@@ -92,6 +94,20 @@ const routes: Routes = [
                     title: 'Privacy master'
                 }
             },
+            {
+                path: 'variants',
+                component: VariantsExplorerComponent,
+                data: {
+                    title: 'Variants Explorer'
+                }
+            },
+            {
+                path: 'dotted',
+                component: DottedchartComponent,
+                data: {
+                    title: 'Variants Explorer'
+                }
+            }
         ]
     }
 ];

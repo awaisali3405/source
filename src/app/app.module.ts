@@ -62,6 +62,12 @@ import {PathsFilterComponent} from './real-ws/paths-filter/paths-filter.componen
 import {ActivityDashboardComponent} from './real-ws/activity-dashboard/activity-dashboard.component';
 import {PrivacyMasterComponent} from './real-ws/privacy-master/privacy-master.component';
 import {PrivacyRolesComponent} from './real-ws/privacy-roles/privacy-roles.component';
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import {AngularDraggableModule} from "angular2-draggable";
+
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
@@ -113,7 +119,10 @@ export function createTranslateLoader(http: HttpClient) {
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyCERobClkCv1U4mDijGm1FShKva_nxsGJY'
         }),
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        DragDropModule,
+        AngularDraggableModule,
+        PlotlyModule
     ],
     entryComponents: [
         StartActivitiesFilterComponent, EndActivitiesFilterComponent, VariantsFilterComponent, AttributesFilterComponent, PerformanceFilterComponent, TimeframeFilterComponent, NumericAttributeFilterComponent, WaitingCircleComponentComponent, PmtkBpmnVisualizerComponent, LogSharingComponent, PathsFilterComponent, ActivityDashboardComponent, PrivacyRolesComponent

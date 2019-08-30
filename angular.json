@@ -21,6 +21,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/angular2-draggable/css/resizable.min.css",
               "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/css/wizard.css",
               "src/assets/css/quill.snow.css",

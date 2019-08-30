@@ -1,0 +1,6 @@
+<div class="variants-explorer--title">
+  <span class="variants-explorer--title__process" *ngIf="process">Process: {{ process }}</span>
+</div>
+<div class="variants-explorer--content">
+  <app-graph-variant-traces [variants]="variants" class="appGraphVariantTraces"></app-graph-variant-traces>
+</div>
