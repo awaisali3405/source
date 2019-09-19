@@ -1,20 +1,4 @@
 <div class="graph-traces-container">
-  <mat-toolbar>
-    <mat-chip-list>
-      <mat-chip *ngFor="let category of categoryForVisibility"
-                [selectable]="chipsSelectable"
-                selected="{{ category.isSelected }}" color="primary"
-                id="{{ category.title }}"
-                (click)="setVisibleNumberOfTraces($event)">
-        {{ category.title }}
-      </mat-chip>
-    </mat-chip-list>
-    <div class="vertical-divider"></div>
-    <mat-chip #chipRef="matChip" (click)="showLegend(chipRef)" color="primary">Legend</mat-chip>
-  </mat-toolbar>
-  <div class="div-custom-padding"></div>
-  <mat-divider></mat-divider>
-  <div class="div-custom-padding"></div>
   <div class="chart-container" id="chartContainer">
     <!-- chart box -->
     <div class="drag-box" id="chartBox"
@@ -28,20 +12,20 @@
       <div class="drag-box--handler" (dblclick)="resetBox('chartBox')" cdkDragHandle></div>
     </div>
     <!-- legend box -->
-    <div class="drag-box" id="legendBox"
+    <div class="drag-box" id="legendBox" [style.visibility]="isVisibleLegend ? 'visible' : 'hidden'"
          cdkDrag cdkDragBoundary=".chart-container"
          (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)"
          ngResizable rzContainment="#chartContainer">
       <div class="drag-box--content">
         <div *ngFor="let event of events">
-          <mat-icon [style.color]="eventsForColorMapToShow.get(event)" style="font-size: 18px; display: inline; vertical-align: center;">label</mat-icon>
+          <mat-icon [style.color]="eventsColorMapForHtml.get(event)" style="font-size: 18px; display: inline; vertical-align: center;">label</mat-icon>
           <span style="line-height: 1; font-size: 12px">{{ event }}</span>
         </div>
       </div>
       <div class="drag-box--handler" (dblclick)="resetBox('legendBox')" cdkDragHandle></div>
     </div>
     <!-- case box -->
-    <div class="drag-box" id="caseBox"
+    <div class="drag-box" id="caseBox" [style.visibility]="isVisibleCaseEventsExplorer ? 'visible' : 'hidden'"
          cdkDrag cdkDragBoundary=".chart-container"
          (cdkDragStarted)="dragStarted($event)" (cdkDragEnded)="dragEnded($event)"
          ngResizable rzContainment="#chartContainer">

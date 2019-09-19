@@ -32,6 +32,10 @@ export class GraphVariantTracesComponent implements OnChanges {
 
   @Input()
   variants: VariantsModel[];
+  @Input()
+  isVisibleLegend: boolean;
+  @Input()
+  isVisibleCaseEventsExplorer: boolean;
 
   @Input('cdkDragFreeDragPosition')
   freeDragPosition: { x: number; y: number; };
@@ -40,22 +44,15 @@ export class GraphVariantTracesComponent implements OnChanges {
   public variantsLoading: boolean;
   public casesLoading: boolean;
 
-  categoryForVisibility = [
-    { title: 'All', isSelected: 'true' },
-    { title: 'Top 10', isSelected: 'false'},
-    { title: 'Top 5', isSelected: 'false'}
-  ];
-
   polygonDimensionWidth;
   polygonDimensionHeight;
   polygonDimensionSpacing;
   polygonDimensionTailWidth;
 
   public events: Set<string> = new Set();
-  private eventsForColorMapToShow;
+  private eventsColorMapForHtml;
 
   private selectedVariants: string[];
-  private selectedVariantsCount: number;
   private prevSelectedVariantIndex: number = null;
 
   private pm4pyJsonCases;
@@ -66,7 +63,6 @@ export class GraphVariantTracesComponent implements OnChanges {
   dragPosition = {x: 0, y: 0};
   zIndex = { chartBox: 10, caseBox: 20, legendBox: 30};
   maxZIndex: number = 100;
-  chipsSelectable: boolean = true;
 
   //initial position
   boxInfo: any[] = [
@@ -91,7 +87,6 @@ export class GraphVariantTracesComponent implements OnChanges {
     this.setPolygonDimension(25, 30, 3, 10);
     this.createChart();
     this.getAllCases();
-    document.getElementById("legendBox").style.visibility = "hidden";
     this.getInitialInfoOfBoxes();
   }
 
@@ -106,6 +101,7 @@ export class GraphVariantTracesComponent implements OnChanges {
   }
 
   private setColorMap(): void {
+    console.log(this.variants);
     for (let i = 0; i < this.variants.length; i++) {
       for ( let j = 0; j < this.variants[i].events.length; j++) {
         this.events.add(this.variants[i].events[j].split('+')[0]);
@@ -121,11 +117,11 @@ export class GraphVariantTracesComponent implements OnChanges {
       eventsColorMap.set(event, colors(count));
       count++;
     });
-    this.eventsForColorMapToShow = eventsColorMap;
+    this.eventsColorMapForHtml = eventsColorMap;
   }
 
   private createChart(): void {
-    d3.select('svg').remove();
+    d3.select('#chart').select('svg').remove();
     const element = this.chartContainer.nativeElement;
     const data = this.variants;
 
@@ -257,7 +253,7 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    const text = g.selectAll('div')
+    const text = g.selectAll('text')
         .data(d => d.events)
         .enter()
         .append('text')
@@ -338,16 +334,6 @@ export class GraphVariantTracesComponent implements OnChanges {
     // movableBox.setAttribute("cdkDragFreeDragPosition", '{x: 0, y: 0}');
   }
 
-  showLegend(chipRef: MatChip) {
-    var legendBox = document.getElementById('legendBox');
-    chipRef.toggleSelected();
-    if ( chipRef.selected ) {
-      legendBox.style.visibility = 'visible';
-    } else {
-      legendBox.style.visibility = 'hidden';
-    }
-  }
-
   dragStarted(dragEvent) {
     //console.log("drag started");
     dragEvent.source.getRootElement().style.zIndex = this.maxZIndex;
@@ -359,16 +345,6 @@ export class GraphVariantTracesComponent implements OnChanges {
     if (dragElement.id === "legendBox") { dragElement.style.zIndex = this.zIndex.legendBox; }
     else if (dragElement.id === "chartBox") { dragElement.style.zIndex = this.zIndex.chartBox; }
     else if (dragElement.id === "caseBox") { dragElement.style.zIndex = this.zIndex.caseBox; }
-  }
-
-  /**
-   * Chip onClickEventListener
-   */
-  setVisibleNumberOfTraces(event) {
-  }
-
-  onResize($event: any) {
-    // resize event
   }
 
 

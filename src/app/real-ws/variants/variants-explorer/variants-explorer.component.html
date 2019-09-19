@@ -1,6 +1,49 @@
-<div class="variants-explorer--title">
-  <span class="variants-explorer--title__process" *ngIf="process">Process: {{ process }}</span>
-</div>
-<div class="variants-explorer--content">
-  <app-graph-variant-traces [variants]="variants" class="appGraphVariantTraces"></app-graph-variant-traces>
-</div>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <div class="model-info-box" *ngIf="process">
+            <span class="model-info-box__label">Process</span>
+            <span class="model-info-box__value">{{ process }}</span>
+        </div>
+        <div class="model-info-box" *ngIf="variants">
+            <span class="model-info-box__label">Variants</span>
+            <span class="model-info-box__value">{{ variants.length }}</span>
+        </div>
+        <span class="layout--space"></span>
+        <mat-icon class="icon-button--cursor" (click)="sidenav.toggle()">tune</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="graph-container">
+    <mat-sidenav #sidenav mode="side" position="end">
+        <div class="settings-container">
+            <div class="flex-column">
+                <details open>
+                    <summary>Visibility</summary>
+                    <mat-grid-list cols="1" rowHeight="70px">
+                        <mat-grid-tile>
+                            <div class="layout--flex flex-column pt-2 pl-2 mb-2">
+                                <mat-checkbox [(ngModel)]="isVisibleLegend">Legend</mat-checkbox>
+                                <mat-checkbox [(ngModel)]="isVisibleCaseEventsExplorer">Case/Events Explorer</mat-checkbox>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </details>
+            </div>
+            <div class="flex-column">
+                <details open>
+                    <summary>Decoration</summary>
+                    <mat-grid-list cols="1" rowHeight="70px">
+                        <mat-grid-tile>
+
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </details>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <app-graph-variant-traces [variants]="variants"
+                                  [isVisibleLegend]="isVisibleLegend"
+                                  [isVisibleCaseEventsExplorer]="isVisibleCaseEventsExplorer"
+                                  class="appGraphVariantTraces"></app-graph-variant-traces>
+    </mat-sidenav-content>
+</mat-sidenav-container>

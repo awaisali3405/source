@@ -5,12 +5,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PmodelComponent } from './pmodel/pmodel.component';
 import { RealWsRoutingModule } from './real-ws-routing.module';
 import {
-  MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
-  MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatOptionModule, MatPaginator, MatDividerModule, MatGridListModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
-  MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
-  MatToolbarModule, MatSidenavModule
+    MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
+    MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+    MatOptionModule, MatPaginator, MatDividerModule, MatGridListModule,
+    MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatSelectModule,
+    MatSliderModule, MatSortModule, MatTableModule, MatTabsModule, MatPaginatorModule,
+    MatToolbarModule, MatSidenavModule, MatCheckboxModule
 } from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { CasesComponent } from './cases/cases.component';
@@ -68,7 +68,8 @@ import { DottedchartComponent } from './dottedchart/dottedchart.component';
         MatPaginatorModule,
         AngularDraggableModule,
         PlotlyModule,
-        ScrollingModule
+        ScrollingModule,
+        MatCheckboxModule
     ],
 })
 export class RealWsModule { }

@@ -16,11 +16,11 @@
             <span class="model-info-box__label">Events</span>
             <span class="model-info-box__value">{{thisEventsNumber}}</span>
         </div>
-        <div class="model-info-box">
+        <div class="model-info-box" *ngIf="enableProcessModelChoice">
             <span class="model-info-box__label">Type of model</span>
             <div class="model-info-box__value">
                 <mat-form-field>
-                    <mat-select [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)" *ngIf="enableProcessModelChoice">
+                    <mat-select [(value)]="typeOfModel" (selectionChange)="typeOfModelIsChanged($event)">
                         <mat-option value="dfg">DFG</mat-option>
                         <mat-option value="tree">Process Tree (Inductive)</mat-option>
                         <mat-option value="inductive">Petri (Inductive)</mat-option>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <span class="layout--space"></span>
-        <mat-icon class="icon-button--cursor"(click)="sidenav.toggle()" [hidden]="!dotProvided">tune</mat-icon>
+        <mat-icon class="icon-button--cursor" (click)="sidenav.toggle()" [hidden]="!dotProvided">tune</mat-icon>
     </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container class="model-container" [hidden]="!dotProvided">
@@ -52,9 +52,9 @@
                     <summary>Decoration</summary>
                     <mat-grid-list cols="1" rowHeight="70px">
                         <mat-grid-tile>
-                            <mat-radio-group class="layout--flex flex-column pt-2 pl-2 " (change)="decorationIsChanged($event)" [value]="decoration">
-                                <mat-radio-button class="radio-button--small mat-caption" disableRipple value="freq">Frequency</mat-radio-button>
-                                <mat-radio-button class="radio-button--small mat-caption" disableRipple value="perf">Performance</mat-radio-button>
+                            <mat-radio-group class="layout--flex flex-column pt-2 pl-2" (change)="decorationIsChanged($event)" [value]="decoration">
+                                <mat-radio-button disableRipple value="freq">Frequency</mat-radio-button>
+                                <mat-radio-button disableRipple value="perf">Performance</mat-radio-button>
                             </mat-radio-group>
                         </mat-grid-tile>
                     </mat-grid-list>

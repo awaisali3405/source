@@ -26,6 +26,9 @@ export class VariantsExplorerComponent implements OnInit {
   variants;
   events;
 
+  isVisibleLegend: boolean;
+  isVisibleCaseEventsExplorer: boolean;
+
   constructor(
       private route: ActivatedRoute,
       private pm4pyServ: Pm4pyService,
@@ -35,6 +38,9 @@ export class VariantsExplorerComponent implements OnInit {
     this.isLoading = false;
     this.variantsLoading = false;
     this.casesLoading = false;
+
+    this.isVisibleLegend = false;
+    this.isVisibleCaseEventsExplorer = true;
 
     this.pm4pyService = pm4pyServ;
     this.authService.checkAuthentication().subscribe(data => {
@@ -60,19 +66,21 @@ export class VariantsExplorerComponent implements OnInit {
       this.pm4pyJsonVariants = data as JSON;
       this.variants = this.pm4pyJsonVariants['variants'];
       this.events = new Map();
-      // console.log(this.variants);
       let i = 0;
+      let totalCountForCase = 0;
       while (i < this.variants.length) {
+        totalCountForCase += this.variants[i].count;
+        // set events as array
         let jsonEvents = this.variants[i]['variant'];
-        // console.log(events);
         this.variants[i]['events'] = jsonEvents.split(',');
-        // console.log(this.variants[i]);
         i++;
       }
+      this.variants.forEach((variant) => {
+        variant['percentage'] = ((variant.count / totalCountForCase) * 100).toFixed(2);
+      });
+
       this.variantsLoading = false;
       this.isLoading = this.variantsLoading || this.casesLoading;
-     // this.dataSourceVariants.data = this.variants;
-      //console.log(this.variants);
 
       if (this.isLoading === false) {
         this.dialog.closeAll();
