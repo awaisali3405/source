@@ -21,7 +21,7 @@ export class ConfigService {
           hidden: false //options: true, false
         },
         sidebar: {
-          collapsed: true, //options: true, false
+          collapsed: false, //options: true, false
           size: "sidebar-md", // Options: 'sidebar-lg', 'sidebar-md', 'sidebar-sm'
           backgroundColor: "man-of-steel", // Options: 'black', 'pomegranate', 'king-yna', 'ibiza-sunset', 'flickr', 'purple-bliss', 'man-of-steel', 'purple-love'
 

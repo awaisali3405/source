@@ -11,8 +11,8 @@ export const environment = {
     overallEnableBPMN: false,
     overallEnableAlignments: true,
     overallEnableTransient: false,
-    overallEnableStatistics: true,
-    overallEnableSNA: true,
+    overallEnableStatistics: false,
+    overallEnableSNA: false,
     overallEnableDifferentProcessSchemas: false,
     overallEnableSharing: true
 };

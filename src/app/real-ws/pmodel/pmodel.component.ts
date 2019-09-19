@@ -186,10 +186,10 @@ export class PmodelComponent implements OnInit {
             if (this.dotString.length > 0) {
                 this.dotProvided = true;
 
-                let targetInnerWidth = window.innerWidth * 0.9;
+                let targetInnerWidth = window.innerWidth * 0.74;
                 let targetInnerHeight = window.innerHeight * 0.66;
 
-                let targetWidth = window.innerWidth * 0.92;
+                let targetWidth = window.innerWidth * 0.76;
                 let targetHeight = window.innerHeight * 0.68;
 
                 let currentWidth = parseInt(this.processModelDecodedSVG.split("width=\"")[1].split("pt\"")[0]);
