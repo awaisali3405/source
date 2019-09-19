@@ -1,12 +1,11 @@
-import {Component, OnInit, ViewEncapsulation, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
+import {Component, ViewEncapsulation, Input, ElementRef, ViewChild, OnChanges} from '@angular/core';
 import { Pm4pyService } from 'app/pm4py-service.service';
 import * as d3 from 'd3';
 export * from 'd3-scale';
-import {MatChip, MatDialog} from '@angular/material';
-import {WaitingCircleComponentComponent} from "../../waiting-circle-component/waiting-circle-component.component";
-import {HttpParams} from "@angular/common/http";
+import { MatDialog } from '@angular/material';
+import { WaitingCircleComponentComponent } from "../../waiting-circle-component/waiting-circle-component.component";
+import { HttpParams } from "@angular/common/http";
 import { colorRange, eventsColorMap } from "../variants-explorer-model";
-import {AngularResizableDirective} from "angular2-draggable";
 
 interface VariantsModel {
   caseDuration: any;
@@ -44,10 +43,11 @@ export class GraphVariantTracesComponent implements OnChanges {
   public variantsLoading: boolean;
   public casesLoading: boolean;
 
-  polygonDimensionWidth;
-  polygonDimensionHeight;
-  polygonDimensionSpacing;
-  polygonDimensionTailWidth;
+  public polygonFoldingWidth: number = 25;
+  polygonDimensionWidth: number = 0;
+  polygonDimensionHeight: number = 30;
+  polygonDimensionSpacing: number = 3;
+  polygonDimensionTailWidth: number = 10;
 
   public events: Set<string> = new Set();
   private eventsColorMapForHtml;
@@ -60,7 +60,6 @@ export class GraphVariantTracesComponent implements OnChanges {
   public cases;
 
   chartWidth: number;
-  dragPosition = {x: 0, y: 0};
   zIndex = { chartBox: 10, caseBox: 20, legendBox: 30};
   maxZIndex: number = 100;
 
@@ -84,7 +83,7 @@ export class GraphVariantTracesComponent implements OnChanges {
     if (!this.variants) { return; }
     this.selectedVariants = [];
     this.setColorMap();
-    this.setPolygonDimension(25, 30, 3, 10);
+    this.setPolygonDimensionWidth(this.polygonFoldingWidth);
     this.createChart();
     this.getAllCases();
     this.getInitialInfoOfBoxes();
@@ -126,12 +125,15 @@ export class GraphVariantTracesComponent implements OnChanges {
     const data = this.variants;
 
     // set chart width
-    var maxLength = 0;
+    var maxCountOfEvents = 0, maxLengthOfEventName = 0;
     data.forEach( (variant) => {
-      if (variant.events.length > maxLength) maxLength = variant.events.length;
+      if (variant.events.length > maxCountOfEvents) {
+          maxCountOfEvents = variant.events.length;
+          maxLengthOfEventName = this.measureStringOnCanvas(this.getEventNameOfMaxLength(variant.events));
+      }
     });
-    this.chartWidth = 55 * maxLength + 100;
-
+    this.chartWidth = (maxLengthOfEventName) * maxCountOfEvents;
+    console.log(this.chartWidth);
 
     const chartDiv = d3.select(element).append('div').append('svg')
         .attr('width', this.chartWidth)
@@ -165,41 +167,10 @@ export class GraphVariantTracesComponent implements OnChanges {
             this.expandingTrace(d, i);
             this.getAllCases(this.variants[i]['variant']);
             this.prevSelectedVariantIndex = i;
-            //console.log("selected variants: " + this.selectedVariants);
           }
-              // if (i == this.prevSelectedVariantIndex) {
-              //   if (this.selectedVariants.includes(d.variants)) {
-              //     this.foldingTrace(d, i);
-              //     this.removeCases();
-              //     this.selectedVariants[i] = false;
-              //   }
-              //   else {
-              //     this.expandingTrace(d, i);
-              //     this.getAllCases(this.variants[i]['variant']);
-              //     this.prevSelectedVariantIndex = i;
-              //     this.selectedVariants[i] = true;
-              //   }
-              // } else { // click different trace
-              //   if (d3.event.ctrlKey || d3.event.metaKey) { // press ctrl or command key
-              //
-              //   } else {
-              //     for (let j = 0; j<this.selectedVariants.length; j++) {
-              //       if (this.selectedVariants[j]) {
-              //         this.foldingTrace(d, j);
-              //         this.removeCases();
-              //         this.selectedVariants[j] = false;
-              //       }
-              //     }
-              //   }
-              //   this.expandingTrace(d, i);
-              //   this.getAllCases(this.variants[i]['variant']);
-              //   this.prevSelectedVariantIndex = i;
-              //   this.selectedVariants[i] = true;
-              // }
-            }
-        );
+        });
 
-    const polygon = g.selectAll('polygon')
+    g.selectAll('polygon')
         .data((d) => d.events)
         .enter()
         .append('svg:polygon')
@@ -208,11 +179,8 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
   }
 
-  private setPolygonDimension(w, h, s, tw): void {
+  private setPolygonDimensionWidth(w): void {
     this.polygonDimensionWidth = w;
-    this.polygonDimensionHeight = h;
-    this.polygonDimensionSpacing = s;
-    this.polygonDimensionTailWidth = tw;
   }
 
   private getTracePoints(i) {
@@ -229,7 +197,7 @@ export class GraphVariantTracesComponent implements OnChanges {
   }
 
   private foldingTrace(d, i) {
-    this.setPolygonDimension(25, 30, 3, 10);
+    this.setPolygonDimensionWidth(this.polygonFoldingWidth);
     const prev_g = d3.selectAll('g').filter((d, j) => j === i);
     prev_g.selectAll('polygon').remove();
     prev_g.selectAll('polygon')
@@ -243,17 +211,26 @@ export class GraphVariantTracesComponent implements OnChanges {
   }
 
   private expandingTrace(d, i) {
-    this.setPolygonDimension(55, 30, 3, 10);
+    var positionX = 0;
     const g = d3.selectAll('g').filter((d, j) => j === i);
     g.selectAll('polygon').remove();
     g.selectAll('polygon')
         .data((d) => d.events)
         .enter()
         .append('svg:polygon')
-        .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
-        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
-    const text = g.selectAll('text')
+        .each((d, i) => {
+            if (i > 0) {
+                positionX = positionX + this.polygonDimensionWidth + this.polygonDimensionSpacing
+            }
+            this.setPolygonWidthByLengthOfEvent(d);
+            g.selectAll('polygon').filter((d, j) => j === i)
+                .attr('points',this.getTracePoints(i))
+                .attr('transform', 'translate(' + positionX + ', 0)');
+        });
+
+    positionX = 0;
+    g.selectAll('text')
         .data(d => d.events)
         .enter()
         .append('text')
@@ -262,27 +239,42 @@ export class GraphVariantTracesComponent implements OnChanges {
         .attr('dy', '0.35em')
         .attr('text-anchor', 'start')
         .text((d) => d)
-        .each(this.wrappingText)
-        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
+        .each((d, i) => {
+            if (i > 0) {
+                positionX = positionX + this.polygonDimensionWidth + this.polygonDimensionSpacing
+            }
+            this.setPolygonWidthByLengthOfEvent(d);
+            g.selectAll('text').filter((d, j) => j === i)
+                .attr('transform', 'translate(' + positionX + ', 0)');
+        });
   }
 
-  private wrappingText() {
-    var self = d3.select(this),
-        textLength = self.node().getComputedTextLength(),
-        text = self.text();
-    console.log('self: '+self+", text"+text, ", textlength: " + textLength);
-    while (textLength > 35 && text.length > 0) {
-      text = text.slice(0, -1);
-      self.text(text);
-      textLength = self.node().getComputedTextLength();
-    }
-    self.text(text + '...');
+  private setPolygonWidthByLengthOfEvent(event: string) {
+      const width = this.measureStringOnCanvas(event);
+      this.setPolygonDimensionWidth(width + 15);
+  }
+
+  private measureStringOnCanvas(str: string): number {
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext("2d");
+      ctx.font = "0.8rem Rubik";
+      return Math.round(ctx.measureText(str).width);
+  }
+
+  private getEventNameOfMaxLength(events: string[]): string {
+      var max = 0;
+      var maxEvent: string = events[0];
+      events.forEach((event) => {
+          if (event.length > max) {
+              max = event.length;
+              maxEvent = event;
+          }
+      });
+      return maxEvent;
   }
 
   getAllCases(variant?: string) {
     this.dialog.open(WaitingCircleComponentComponent);
-
-    //console.log("selected variants: " + variant);
     this.casesLoading = true;
     this.isLoading = this.variantsLoading || this.casesLoading;
     let params: HttpParams = new HttpParams();
@@ -310,38 +302,12 @@ export class GraphVariantTracesComponent implements OnChanges {
     this.cases = this.allCases;
   }
 
-  resetBox(boxId) {
-    console.log("resetBox");
-    // this.boxInfo.forEach( (box) => {
-    //   if (box.id === boxId) {
-    //     console.log(boxId);
-    //     var element = document.getElementById(boxId);
-    //     element.setAttribute('style', 'position: absolute; ' +
-    //         'top: ' + box.top+'; ' +
-    //         'left: ' + box.left + '; ' +
-    //         'width: ' + box.width + '; ' +
-    //         'height: ' + box.height +';' );
-        // element.style.position = 'absolute';
-        // element.style.top = box.top;
-        // element.style.left = box.left;
-        // element.style.width = box.width;
-        // element.style.height = box.height;
-    //   }
-    // });
-
-    // var movableBox = event.source.parentElement;
-    // console.log(movableBox.id);
-    // movableBox.setAttribute("cdkDragFreeDragPosition", '{x: 0, y: 0}');
-  }
-
   dragStarted(dragEvent) {
-    //console.log("drag started");
     dragEvent.source.getRootElement().style.zIndex = this.maxZIndex;
   }
 
   dragEnded(dragEvent) {
     var dragElement = dragEvent.source.getRootElement();
-    //console.log(dragElement.id + " ended");
     if (dragElement.id === "legendBox") { dragElement.style.zIndex = this.zIndex.legendBox; }
     else if (dragElement.id === "chartBox") { dragElement.style.zIndex = this.zIndex.chartBox; }
     else if (dragElement.id === "caseBox") { dragElement.style.zIndex = this.zIndex.caseBox; }

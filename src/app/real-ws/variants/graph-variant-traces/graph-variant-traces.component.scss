@@ -17,7 +17,7 @@
   cursor: pointer;
 }
 svg > g > text {
-  max-width: 55px;
+  width: fit-content;
   height: 30px;
   font-size: 0.8rem;
   fill: #fff;
@@ -70,7 +70,7 @@ svg > g > text {
   height: 10px;
 }
 #chartBox {
-  width: 100%;
+  width: 60%;
   height: fit-content;
   max-height: 70vh;
   position: absolute;
