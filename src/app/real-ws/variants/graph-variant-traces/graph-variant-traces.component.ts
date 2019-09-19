@@ -137,14 +137,14 @@ export class GraphVariantTracesComponent implements OnChanges {
 
     const chartDiv = d3.select(element).append('div').append('svg')
         .attr('width', this.chartWidth)
-        .attr('height', data.length * 50);
+        .attr('height', data.length * 70);
     const g = chartDiv.selectAll('g')
         .data(data)
         .enter()
         .append('svg:g')
         .attr('width', (d) => (this.polygonDimensionWidth + this.polygonDimensionTailWidth) * d.events.length)
         .attr('height', 50)
-        .attr('transform', (d, i) => 'translate(0, ' + i * 50 + ')')
+        .attr('transform', (d, i) => 'translate(0, ' + (i * 50 + 20) + ')')
         .on('click', (d, i) => {
           if (this.selectedVariants.includes(d.variant)) { // click already selected variants
             let removeIndex: number = this.selectedVariants.indexOf(d.variant);
@@ -176,7 +176,33 @@ export class GraphVariantTracesComponent implements OnChanges {
         .append('svg:polygon')
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
-        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
+        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)')
+        .on('mouseover', this.mouseOverPolygon)
+        .on('mouseout', this.mouseOutPolygon);
+    g.selectAll('text')
+        .data(d => d.events)
+        .enter()
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 15)
+        .attr('dy', '-1.8em')
+        .attr('text-anchor', 'start')
+        .text((d) => d)
+        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)')
+        .attr('visibility', 'hidden')
+        .style('fill', '#000');
+  }
+
+  private mouseOverPolygon(d, i) {
+      var parentNode = d3.select(this).node().parentNode;
+    d3.select(parentNode).selectAll('text').filter((d, j) => j === i)
+        .attr('visibility', 'visible');
+  }
+
+  private mouseOutPolygon(d, i) {
+      var parentNode = d3.select(this).node().parentNode;
+      d3.select(parentNode).selectAll('text').filter((d, j) => j === i)
+          .attr('visibility', 'hidden');
   }
 
   private setPolygonDimensionWidth(w): void {
@@ -206,14 +232,30 @@ export class GraphVariantTracesComponent implements OnChanges {
         .append('svg:polygon')
         .attr('points', (d, i) => this.getTracePoints(i))
         .style('fill', (d, i) => eventsColorMap.get(d.split('+')[0]))
-        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)');
+        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)')
+        .on('mouseover', this.mouseOverPolygon)
+        .on('mouseout', this.mouseOutPolygon);
     prev_g.selectAll('text').remove();
+    prev_g.selectAll('text')
+        .data(d => d.events)
+        .enter()
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 15)
+        .attr('dy', '-1.8em')
+        .attr('text-anchor', 'start')
+        .text((d) => d)
+        .attr('transform', (d, i) => 'translate(' + i * (this.polygonDimensionWidth + this.polygonDimensionSpacing) + ', 0)')
+        .attr('visibility', 'hidden')
+        .style('fill', '#000');
   }
 
   private expandingTrace(d, i) {
     var positionX = 0;
     const g = d3.selectAll('g').filter((d, j) => j === i);
     g.selectAll('polygon').remove();
+    g.selectAll('text').remove();
+
     g.selectAll('polygon')
         .data((d) => d.events)
         .enter()
