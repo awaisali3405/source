@@ -89,6 +89,10 @@ export class GraphVariantTracesComponent implements OnChanges {
     this.getInitialInfoOfBoxes();
   }
 
+  public resetBox(element) {
+    // dummy method, to fix building
+  }
+
   private getInitialInfoOfBoxes() {
     this.boxInfo.forEach((box) => {
       var boxFromHtml = document.getElementById(box.id);
