@@ -105,18 +105,15 @@ export class PmodelComponent implements OnInit {
         this.authenticationService.checkAuthentication().subscribe(data => {
             //console.log(data);
         });
-        // calls the retrieval of the process schema from the service
-        // this.populateProcessSchema();
-        // this.getLogSummary();
 
         this.populateProcessSchema();
-        this.getLogSummary();
+        //this.getLogSummary();
 
         this.router.events.subscribe((next) => {
             if (next instanceof RoutesRecognized) {
                 if (next.url.startsWith('/process')) {
                     this.populateProcessSchema();
-                    this.getLogSummary();
+                    //this.getLogSummary();
                 }
             }
         });
@@ -170,7 +167,12 @@ export class PmodelComponent implements OnInit {
             }
 
 
-
+            this.thisVariantsNumber = this.pm4pyJson['this_variants_number'];
+            this.thisCasesNumber = this.pm4pyJson['this_cases_number'];
+            this.thisEventsNumber = this.pm4pyJson['this_events_number'];
+            this.ancestorVariantsNumber = this.pm4pyJson['ancestor_variants_number'];
+            this.ancestorCasesNumber = this.pm4pyJson['ancestor_cases_number'];
+            this.ancestorEventsNumber = this.pm4pyJson['ancestor_events_number'];
             this.thisHandler = this.pm4pyJson['handler'];
             this.enableDownloadModel = this.typeOfModel === 'inductive' || this.typeOfModel === 'indbpmn';
             this.enableBpmnDownload = this.typeOfModel === 'indbpmn';
@@ -227,10 +229,7 @@ export class PmodelComponent implements OnInit {
         });
     }
 
-    public getLogSummary() {
-        /**
-         * Retrieves the log summary and updates the visualization
-         */
+    /*public getLogSummary() {
         let params: HttpParams = new HttpParams();
 
         this.pm4pyService.getLogSummary(params).subscribe(data => {
@@ -251,7 +250,7 @@ export class PmodelComponent implements OnInit {
                 this.ratioEventsNumber = 100;
             }
         });
-    }
+    }*/
 
     manageClickOnSvg(event) {
         console.log("event.target.nodeName");

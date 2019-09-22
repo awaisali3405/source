@@ -92,13 +92,10 @@ export class CasesComponent implements OnInit, AfterViewInit {
 
         this.getAllVariants();
         this.getAllCases();
-        this.getLogSummary();
+        //this.getLogSummary();
     }
 
-    public getLogSummary() {
-        /**
-         * Retrieves the log summary and updates the visualization
-         */
+    /*public getLogSummary() {
         let params: HttpParams = new HttpParams();
 
         this.pm4pyService.getLogSummary(params).subscribe(data => {
@@ -119,7 +116,7 @@ export class CasesComponent implements OnInit, AfterViewInit {
                 this.ratioEventsNumber = 100;
             }
         });
-    }
+    }*/
 
     ngOnInit() {
         /**
@@ -157,6 +154,12 @@ export class CasesComponent implements OnInit, AfterViewInit {
         this.pm4pyService.getAllVariants(params).subscribe(data => {
             this.pm4pyJsonVariants = data as JSON;
             this.variants = this.pm4pyJsonVariants['variants'];
+            this.thisVariantsNumber = this.pm4pyJsonVariants['this_variants_number'];
+            this.thisCasesNumber = this.pm4pyJsonVariants['this_cases_number'];
+            this.thisEventsNumber = this.pm4pyJsonVariants['this_events_number'];
+            this.ancestorVariantsNumber = this.pm4pyJsonVariants['ancestor_variants_number'];
+            this.ancestorCasesNumber = this.pm4pyJsonVariants['ancestor_cases_number'];
+            this.ancestorEventsNumber = this.pm4pyJsonVariants['ancestor_events_number'];
             let i: number = 0;
             while (i < this.variants.length) {
                 let keys: string[] = Object.keys(this.variants[i]);
@@ -193,7 +196,14 @@ export class CasesComponent implements OnInit, AfterViewInit {
 
         this.pm4pyService.getAllCases(params).subscribe(data => {
             this.pm4pyJsonCases = data as JSON;
-            this.cases = this.pm4pyJsonCases['cases'];/**give name to the JSON */
+            this.cases = this.pm4pyJsonCases['cases'];
+            this.thisVariantsNumber = this.pm4pyJsonVariants['this_variants_number'];
+            this.thisCasesNumber = this.pm4pyJsonVariants['this_cases_number'];
+            this.thisEventsNumber = this.pm4pyJsonVariants['this_events_number'];
+            this.ancestorVariantsNumber = this.pm4pyJsonVariants['ancestor_variants_number'];
+            this.ancestorCasesNumber = this.pm4pyJsonVariants['ancestor_cases_number'];
+            this.ancestorEventsNumber = this.pm4pyJsonVariants['ancestor_events_number'];
+
             this.casesLoading = false;
             this.isLoading = this.variantsLoading || this.casesLoading;
             this.dataSourceCases.data = this.cases;
