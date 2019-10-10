@@ -2,7 +2,7 @@ export const environment = {
     production: true,
     webServicePath: window.location.protocol+'//' + window.location.hostname + ':'+window.location.port+'/',
     enableUpload: false,
-    enableDownload: false,
+    enableDownload: true,
     enableLogin: true,
     enableMD5cipheringPasswordsFrontend: true,
     maxNoVariantsForAlignments: 235,
