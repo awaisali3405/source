@@ -33,6 +33,7 @@ import { PlotlyModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
 
 import { DottedchartComponent } from './dottedchart/dottedchart.component';
+import { PrivacyConnectorComponent } from './privacy-connector/privacy-connector.component';
 
 @NgModule({
     declarations: [PmodelComponent, CasesComponent, StatisticsComponent, LoginComponentComponent, PlistComponent, SnaComponent, TransientComponent, AlignmentsComponent, VariantsExplorerComponent, GraphVariantTracesComponent, GraphCasesComponent, DottedchartComponent, PrivacyMasterComponent],

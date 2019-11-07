@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Privacy Connector Method</h2>
+<mat-dialog-content class="mat-typography">
+  Select the checkbo corresponding to the option that you would like to apply on the log:<br /><br />
+  <mat-checkbox [(checked)]="relation_depth" (change)="changeRelationDepth()">Relation Depth option</mat-checkbox><br />
+  <mat-checkbox  [(checked)]="trace_length" (change)="changeTraceLength()">Trace Length option</mat-checkbox><br />
+  <mat-checkbox [(checked)]="trace_id" (change)="changeTraceId()">Trace ID option</mat-checkbox><br />
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>

@@ -5,6 +5,7 @@ import {Pm4pyService} from '../../pm4py-service.service';
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {MatDialog} from '@angular/material';
 import {PrivacyRolesComponent} from '../privacy-roles/privacy-roles.component';
+import {PrivacyConnectorComponent} from '../privacy-connector/privacy-connector.component';
 
 @Component({
   selector: 'app-privacy-master',
@@ -30,6 +31,10 @@ export class PrivacyMasterComponent implements OnInit {
 
   openPrivacyRoles() {
     this.dialog.open(PrivacyRolesComponent);
+  }
+
+  openPrivacyComponent() {
+    this.dialog.open(PrivacyConnectorComponent);
   }
 
 }
