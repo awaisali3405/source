@@ -509,6 +509,30 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  privacyConnectorMethod(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+    let process = localStorage.getItem("process");
+
+    parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("process", process);
+
+    var completeUrl: string = this.webservicePath + "privacyConnectorMethod";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
+  getContent(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+    let process = localStorage.getItem("process");
+
+    parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("process", process);
+
+    var completeUrl: string = this.webservicePath + "getContent";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   getEventsForDotted(parameters : HttpParams) {
     let process = localStorage.getItem("process");
     let sessionId = localStorage.getItem("sessionId");

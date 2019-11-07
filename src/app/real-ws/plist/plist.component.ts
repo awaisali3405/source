@@ -5,6 +5,7 @@ import {Router, RoutesRecognized} from "@angular/router";
 import {AuthenticationServiceService} from '../../authentication-service.service';
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
+import {Http} from '@angular/http';
 
 @Component({
   selector: 'app-plist',
@@ -62,13 +63,36 @@ export class PlistComponent implements OnInit {
     localStorage.removeItem("process");
   }
 
-  logClicked(log) {
+  logClicked(log, log_type) {
     /**
      * Manages the click on a process
      */
     localStorage.setItem("process", log);
 
-    this.router.navigate(["/real-ws/pmodel"]);
+    if (log_type === "xml") {
+      let parameters : HttpParams = new HttpParams();
+      this.pm4pyService.getContent(parameters).subscribe(data => {
+        let dataasjson = data as JSON;
+        let ext = dataasjson["ext"];
+        let content = dataasjson["base64"];
+
+        var image = new Image();
+        image.src = "data:image/png;base64," + content;
+
+        var w = window.open("");
+        w.document.write(image.outerHTML);
+      });
+    }
+    else {
+
+      this.router.navigate(["/real-ws/pmodel"]);
+    }
+  }
+
+  downloadFile(data: string, type: string) {
+    const blob = new Blob([data], { type: type });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
   deleteLog(log) {

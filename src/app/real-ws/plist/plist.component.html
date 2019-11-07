@@ -5,7 +5,7 @@
 <p style="color: #000000">Select the process you wish to analyze:</p>
 &nbsp;
 <mat-action-list style="height: 270px; overflow-y: auto;">
-  <mat-list-item *ngFor="let log of logsList" (click)="logClicked(log['log_name'])" style="max-height: 40px">
+  <mat-list-item *ngFor="let log of logsList" (click)="logClicked(log['log_name'], log['type'])" style="max-height: 40px">
       <p><i class="fa fa-database"></i> &nbsp; <i class="ft-delete" *ngIf="log['can_delete']" (click)="deleteLog(log['log_name'])"></i> &nbsp; {{log['log_name']}}</p>
   </mat-list-item>
 </mat-action-list>
