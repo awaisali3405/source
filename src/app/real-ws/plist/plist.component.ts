@@ -73,20 +73,31 @@ export class PlistComponent implements OnInit {
       let parameters : HttpParams = new HttpParams();
       this.pm4pyService.getContent(parameters).subscribe(data => {
         let dataasjson = data as JSON;
-        let ext = dataasjson["ext"];
-        let content = dataasjson["base64"];
 
-        var image = new Image();
-        image.src = "data:image/png;base64," + content;
-
-        var w = window.open("");
-        w.document.write(image.outerHTML);
+        let xml = atob(dataasjson["xml"]);
+        this.downloadFile(xml, "text/xml");
       });
     }
     else {
 
       this.router.navigate(["/real-ws/pmodel"]);
     }
+  }
+
+  getImage(encryption : boolean) {
+    let parameters : HttpParams = new HttpParams();
+    parameters["encrypt_result"] = encryption.toString();
+    this.pm4pyService.getContent(parameters).subscribe(data => {
+      let dataasjson = data as JSON;
+      let ext = dataasjson["ext"];
+      let content = dataasjson["base64"];
+
+      var image = new Image();
+      image.src = "data:image/png;base64," + content;
+
+      var w = window.open("");
+      w.document.write(image.outerHTML);
+    });
   }
 
   downloadFile(data: string, type: string) {
@@ -116,6 +127,16 @@ export class PlistComponent implements OnInit {
         this.router.navigateByUrl("/real-ws/plist");
       }
     }
+  }
+
+  getDFGwithoutencryption(log) {
+    localStorage.setItem("process", log);
+    this.getImage(false);
+  }
+
+  getDFGwithencryption(log) {
+    localStorage.setItem("process", log);
+    this.getImage(true);
   }
 
 }
