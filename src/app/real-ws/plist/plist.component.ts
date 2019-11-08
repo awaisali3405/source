@@ -70,13 +70,7 @@ export class PlistComponent implements OnInit {
     localStorage.setItem("process", log);
 
     if (log_type === "xml") {
-      let parameters : HttpParams = new HttpParams();
-      this.pm4pyService.getContent(parameters).subscribe(data => {
-        let dataasjson = data as JSON;
 
-        let xml = atob(dataasjson["xml"]);
-        this.downloadFile(xml, "text/xml");
-      });
     }
     else {
 
@@ -84,20 +78,37 @@ export class PlistComponent implements OnInit {
     }
   }
 
+  getXML() {
+      let parameters : HttpParams = new HttpParams();
+      parameters = parameters.set("encrypt_result", "true");
+
+      this.pm4pyService.getContent(parameters).subscribe(data => {
+      let dataasjson = data as JSON;
+
+      let xml = atob(dataasjson["xml"]);
+      this.downloadFile(xml, "text/xml");
+    });
+  }
+
   getImage(encryption : boolean) {
+    let frequency_treshold = prompt("frequency_threshold ?", "0.0");
+
     let parameters : HttpParams = new HttpParams();
-    parameters["encrypt_result"] = encryption.toString();
-    this.pm4pyService.getContent(parameters).subscribe(data => {
+    parameters = parameters.set("encrypt_result", encryption.toString());
+    parameters = parameters.set("frequency_treshold", frequency_treshold);
+
+    this.pm4pyService.getContent2(parameters).subscribe(data => {
       let dataasjson = data as JSON;
       let ext = dataasjson["ext"];
       let content = dataasjson["base64"];
 
       var image = new Image();
-      image.src = "data:image/png;base64," + content;
+      image.src = "data:image/svg;base64," + content;
 
       var w = window.open("");
       w.document.write(image.outerHTML);
     });
+    return false;
   }
 
   downloadFile(data: string, type: string) {
@@ -112,8 +123,6 @@ export class PlistComponent implements OnInit {
       httpParams = httpParams.set("process", log);
 
       this.pm4pyService.deleteEventLog(httpParams).subscribe(data => {
-        alert("deleted log " + log);
-
         if (this._route.url === "/real-ws/plist") {
           this.router.navigateByUrl("/real-ws/plist2");
         } else {
@@ -132,11 +141,13 @@ export class PlistComponent implements OnInit {
   getDFGwithoutencryption(log) {
     localStorage.setItem("process", log);
     this.getImage(false);
+    return false;
   }
 
   getDFGwithencryption(log) {
     localStorage.setItem("process", log);
     this.getImage(true);
+    return false;
   }
 
 }
