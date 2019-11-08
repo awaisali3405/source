@@ -78,8 +78,10 @@ export class PlistComponent implements OnInit {
     }
   }
 
-  getXML() {
-      let parameters : HttpParams = new HttpParams();
+  getXML(process) {
+    localStorage.setItem("process", process);
+
+    let parameters : HttpParams = new HttpParams();
       parameters = parameters.set("encrypt_result", "true");
 
       this.pm4pyService.getContent(parameters).subscribe(data => {
