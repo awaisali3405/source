@@ -6,6 +6,7 @@ import {AuthenticationServiceService} from '../../authentication-service.service
 import {WaitingCircleComponentComponent} from '../waiting-circle-component/waiting-circle-component.component';
 import {MatDialog} from '@angular/material';
 import {Http} from '@angular/http';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-plist',
@@ -88,11 +89,11 @@ export class PlistComponent implements OnInit {
       let dataasjson = data as JSON;
 
       let xml = atob(dataasjson["xml"]);
-      this.downloadFile(xml, "text/xml");
+      this.downloadFile(process+".xml", xml, "text/xml");
     });
   }
 
-  getImage(encryption : boolean) {
+  getImage(log: string, encryption : boolean) {
     let frequency_treshold = prompt("frequency_threshold ?", "0.0");
 
     let parameters : HttpParams = new HttpParams();
@@ -104,19 +105,27 @@ export class PlistComponent implements OnInit {
       let ext = dataasjson["ext"];
       let content = dataasjson["base64"];
 
-      var image = new Image();
-      image.src = "data:image/svg;base64," + content;
+      if (encryption == true) {
+        this.downloadFile(log+"_enc.svg", atob(content), "image/svg");
+      }
+      else {
+        this.downloadFile(log+"_dec.svg", atob(content), "image/svg");
+      }
 
-      var w = window.open("");
-      w.document.write(image.outerHTML);
+      //var image = new Image();
+      //image.src = "data:image/svg;base64," + content;
+
+      //var w = window.open("");
+      //w.document.write(image.outerHTML);
     });
     return false;
   }
 
-  downloadFile(data: string, type: string) {
+  downloadFile(log: string, data: string, type: string) {
     const blob = new Blob([data], { type: type });
-    const url= window.URL.createObjectURL(blob);
-    window.open(url);
+    //const url= window.URL.createObjectURL(blob);
+    //window.open(url);
+    FileSaver.saveAs(blob, log);
   }
 
   deleteLog(log) {
@@ -142,13 +151,13 @@ export class PlistComponent implements OnInit {
 
   getDFGwithoutencryption(log) {
     localStorage.setItem("process", log);
-    this.getImage(false);
+    this.getImage(log, false);
     return false;
   }
 
   getDFGwithencryption(log) {
     localStorage.setItem("process", log);
-    this.getImage(true);
+    this.getImage(log, true);
     return false;
   }
 
