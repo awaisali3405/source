@@ -4,8 +4,9 @@
   <mat-checkbox [(checked)]="relation_depth" (change)="changeRelationDepth()">Relation Depth option</mat-checkbox><br />
   <mat-checkbox  [(checked)]="trace_length" (change)="changeTraceLength()">Trace Length option</mat-checkbox><br />
   <mat-checkbox [(checked)]="trace_id" (change)="changeTraceId()">Trace ID option</mat-checkbox><br />
+  Keyword (16 characters; default if empty) <input matInput type="password" id="key" name="key" (change)="checkPassword()" /><br />
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter($event)">Apply</button>
 </mat-dialog-actions>

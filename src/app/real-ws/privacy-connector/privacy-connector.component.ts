@@ -34,29 +34,57 @@ export class PrivacyConnectorComponent implements OnInit {
   ngOnInit() {
   }
 
-  applyFilter() {
-    let httpParams : HttpParams = new HttpParams();
+  checkPassword() {
+    let key = (<HTMLInputElement>document.getElementById("key")).value;
 
-    httpParams = httpParams.set("relation_depth", this.relation_depth.toString());
-    httpParams = httpParams.set("trace_length", this.trace_length.toString());
-    httpParams = httpParams.set("trace_id", this.trace_id.toString());
+    if (key.length == 0) {
+      key = "CHIAVECHIAVECHIA";
+    }
 
-    let dia = this.dialog.open(WaitingCircleComponentComponent);
+    if (key.length < 16) {
+      alert("The provided keyphrase must be exactly 16 characters long!");
+      return false;
+    }
+    
+    return true;
+  }
 
-    this.pm4pyService.privacyConnectorMethod(httpParams).subscribe(data => {
-      let resultJson = data as JSON;
+  applyFilter(event) {
+    let key = (<HTMLInputElement>document.getElementById("key")).value;
 
-      if (resultJson["status"] == "OK") {
-        this._route.navigateByUrl("/real-ws/plist");
-      }
-      else {
+    if (key.length == 0) {
+      key = "CHIAVECHIAVECHIA";
+    }
+
+    if (this.checkPassword()) {
+      let httpParams : HttpParams = new HttpParams();
+
+      httpParams = httpParams.set("relation_depth", this.relation_depth.toString());
+      httpParams = httpParams.set("trace_length", this.trace_length.toString());
+      httpParams = httpParams.set("trace_id", this.trace_id.toString());
+      httpParams = httpParams.set("key", key);
+  
+      let dia = this.dialog.open(WaitingCircleComponentComponent);
+  
+      this.pm4pyService.privacyConnectorMethod(httpParams).subscribe(data => {
+        let resultJson = data as JSON;
+  
+        if (resultJson["status"] == "OK") {
+          this._route.navigateByUrl("/real-ws/plist");
+        }
+        else {
+          alert("Something has gone wrong in applying the privacy-preserving method!");
+        }
+        dia.close();
+      }, err => {
         alert("Something has gone wrong in applying the privacy-preserving method!");
-      }
-      dia.close();
-    }, err => {
-      alert("Something has gone wrong in applying the privacy-preserving method!");
-      dia.close();
-    });
+        dia.close();
+      });
+    }
+    else {
+      alert("Error applying connector method!");
+      event.preventDefault();
+    }
   }
 
   changeRelationDepth() {
