@@ -81,11 +81,10 @@ export class PlistComponent implements OnInit {
 
   getXML(process) {
     localStorage.setItem("process", process);
-    let key = prompt("key ?", "CHIAVECHIAVECHIA");
 
     let parameters : HttpParams = new HttpParams();
       parameters = parameters.set("encrypt_result", "false");
-      parameters = parameters.set("key", key);
+      parameters = parameters.set("key", "");
 
       this.pm4pyService.getContent(parameters).subscribe(data => {
       let dataasjson = data as JSON;
@@ -97,12 +96,18 @@ export class PlistComponent implements OnInit {
 
   getImage(log: string, encryption : boolean) {
     let frequency_treshold = prompt("frequency_threshold ?", "0.0");
-    let key = prompt("key ?", "CHIAVECHIAVECHIA");
 
     let parameters : HttpParams = new HttpParams();
     parameters = parameters.set("encrypt_result", encryption.toString());
     parameters = parameters.set("frequency_treshold", frequency_treshold);
-    parameters = parameters.set("key", key);
+
+    if (encryption.toString() == "true") {
+      let key = prompt("key ?", "CHIAVECHIAVECHIA");
+      parameters = parameters.set("key", key);
+    }
+    else {
+      parameters = parameters.set("key", "");
+    }
 
     this.pm4pyService.getContent2(parameters).subscribe(data => {
       let dataasjson = data as JSON;

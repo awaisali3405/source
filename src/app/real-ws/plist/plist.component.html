@@ -6,6 +6,6 @@
 &nbsp;
 <mat-action-list style="height: 270px; overflow-y: auto;">
   <mat-list-item *ngFor="let log of logsList" (click)="logClicked(log['log_name'], log['type'])" style="max-height: 40px">
-      <p><i class="fa fa-database"></i> &nbsp; <i class="ft-delete" *ngIf="log['can_delete']" (click)="deleteLog(log['log_name'])"></i> <span *ngIf="log['type'] == 'xml'">  &nbsp; <i class="ft-download-cloud" (click)="getDFGwithoutencryption(log['log_name'])"></i> &nbsp; <i class="ft-eye-off" (click)="getDFGwithencryption(log['log_name'])"></i> &nbsp; <i class="ft-aperture" (click)="getXML(log['log_name'])"></i> </span>&nbsp; {{log['log_name']}}</p>
+      <p><i class="fa fa-database"></i> &nbsp; <i class="ft-delete" *ngIf="log['can_delete']" (click)="deleteLog(log['log_name'])"></i> <span *ngIf="log['type'] == 'xml'"> &nbsp; <i class="ft-download-cloud" (click)="getDFGwithoutencryption(log['log_name'])"></i> &nbsp; <i class="ft-eye-off" (click)="getDFGwithencryption(log['log_name'])"></i> &nbsp; <i class="ft-aperture" (click)="getXML(log['log_name'])"></i> </span>&nbsp; {{log['log_name']}}</p>
   </mat-list-item>
 </mat-action-list>
