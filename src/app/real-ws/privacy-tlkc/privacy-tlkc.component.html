@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>TLKC Privacy Method</h2>
+<mat-dialog-content class="mat-typography">
+  Time accuracy (T):<br />
+  <mat-select placeholder="Time accuracy (T)" [(value)]="timeAccuracy">
+    <mat-option value="minutes">Minutes</mat-option>
+    <mat-option value="hours">Hours</mat-option>
+    <mat-option value="days">Days</mat-option>
+  </mat-select>
+  <br />
+  Background Knowledge Type:<br />
+  <mat-select placeholder="Type" [(value)]="backgroundKnowledgeType">
+    <mat-option value="set">Set</mat-option>
+    <mat-option value="multiset">Multiset</mat-option>
+    <mat-option value="sequence">Sequence</mat-option>
+    <mat-option value="relative">Relative</mat-option>
+  </mat-select>
+  <br />
+  Background Knowledge Power: <input id="L" matInput style="width: 80px; font-size: 13px" value="2"><br />
+  Confidence Bounding (C): <input id="C" matInput style="width: 80px; font-size: 13px" value="1"><br />
+  Anonimity Group Size (K): <input id="K" matInput style="width: 80px; font-size: 13px" value="10"><br />
+  Frequency Threshold (K2): <input id="K2" matInput style="width: 80px; font-size: 13px" value="0.5"><br />
+  <br />
+  Select the Sensitive Attributes:
+  <br /><br />
+  <table style="border: 0">
+    <tr>
+      <td style="width: 250px; font-size: 7pt">
+        <b>Trace attributes:</b><br />
+        <table>
+          <tr *ngFor="let ea of traceAttributesList">
+            <td>
+              <input type="checkbox" (click)="addRemoveTraceAttribute(ea)">
+            </td>
+            <td>
+              {{ea}}
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="width: 250px; font-size: 7pt">
+        <b>Event attributes:</b><br />
+        <table>
+          <tr *ngFor="let ea of attributesList">
+            <td>
+              <input type="checkbox" (click)="addRemoveEventAttribute(ea)">
+            </td>
+            <td>
+              {{ea}}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="applyFilter()">Apply</button>
+</mat-dialog-actions>
+

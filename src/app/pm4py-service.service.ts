@@ -497,6 +497,18 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
+  privacyTlkc(parameters : HttpParams) {
+    let sessionId = localStorage.getItem("sessionId");
+    let process = localStorage.getItem("process");
+
+    parameters = parameters.set("session", sessionId);
+    parameters = parameters.set("process", process);
+
+    var completeUrl: string = this.webservicePath + "privacyTklc";
+
+    return this.http.get(completeUrl, {params: parameters});
+  }
+
   rolesPrivacyAware(parameters : HttpParams) {
     let sessionId = localStorage.getItem("sessionId");
     let process = localStorage.getItem("process");

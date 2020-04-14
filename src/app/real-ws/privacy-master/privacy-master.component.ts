@@ -6,6 +6,7 @@ import {AuthenticationServiceService} from '../../authentication-service.service
 import {MatDialog} from '@angular/material';
 import {PrivacyRolesComponent} from '../privacy-roles/privacy-roles.component';
 import {PrivacyConnectorComponent} from '../privacy-connector/privacy-connector.component';
+import {PrivacyTlkcComponent} from '../privacy-tlkc/privacy-tlkc.component';
 
 @Component({
   selector: 'app-privacy-master',
@@ -35,6 +36,10 @@ export class PrivacyMasterComponent implements OnInit {
 
   openPrivacyComponent() {
     this.dialog.open(PrivacyConnectorComponent);
+  }
+
+  openPrivacyTLKC() {
+    this.dialog.open(PrivacyTlkcComponent);
   }
 
 }
