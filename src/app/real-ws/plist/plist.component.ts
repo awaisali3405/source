@@ -84,7 +84,7 @@ export class PlistComponent implements OnInit {
 
     let parameters : HttpParams = new HttpParams();
       parameters = parameters.set("encrypt_result", "false");
-      parameters = parameters.set("key", "");
+      parameters = parameters.set("key", "DEFAULTSTRING111");
 
       this.pm4pyService.getContent(parameters).subscribe(data => {
       let dataasjson = data as JSON;
@@ -106,7 +106,7 @@ export class PlistComponent implements OnInit {
       parameters = parameters.set("key", key);
     }
     else {
-      parameters = parameters.set("key", "");
+      parameters = parameters.set("key", "DEFAULTSTRING111");
     }
 
     this.pm4pyService.getContent2(parameters).subscribe(data => {
