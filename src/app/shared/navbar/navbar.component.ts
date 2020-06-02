@@ -254,7 +254,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.dialog.closeAll();
 
-      this.downloadFile(xesJson['content'], 'text/csv');
+      this.downloadFile(xesJson['content'], 'text/xml');
     });
   }
 
