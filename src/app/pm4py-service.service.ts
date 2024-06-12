@@ -308,15 +308,16 @@ export class Pm4pyService {
     return this.http.get(completeUrl, {params: parameters});
   }
 
-  uploadLog(data : any, parameters : HttpParams) {
-    let sessionId = localStorage.getItem("sessionId");
+  uploadLog(data : FormData) {
+    let sessionId = localStorage.getItem('sessionId');
+  const params = new HttpParams()
+    .set('session', sessionId)
+    .set('uniqueCallId', this.newGuid());
 
-    parameters = parameters.set("session", sessionId);
-    parameters = parameters.set("uniqueCallId", this.newGuid());
-
-    var completeUrl : string = this.webservicePath + "uploadLog";
-
-    return this.http.post(completeUrl, data, {params: parameters});
+  const completeUrl: string = this.webservicePath + 'uploadLog';
+        console.log(data);
+        console.log(params);
+  return this.http.post(completeUrl, data, { params });
   }
 
   loginService(username : string, password : string) {

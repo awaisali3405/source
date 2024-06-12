@@ -275,8 +275,25 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       reader.readAsDataURL($event.target.files[0]);
       reader.onload = () => {
         let base64: string = reader.result.toString();
+         // Verify base64 encoding integrity
+         if (base64.startsWith('data:') && base64.includes(';base64,')) {
+          base64 = base64.split(';base64,')[1];
+        } else {
+          console.error('Invalid base64 encoding');
+          alert('Invalid base64 encoding!');
+          return;
+        }
+
+        // Check base64 string length
+        if (base64.length % 4 !== 0 || /[^A-Za-z0-9+/=]/.test(base64)) {
+          console.error('Corrupt base64 string');
+          alert('Corrupt base64 string!');
+          return;
+        }
+
+        console.log(`Base64 length: ${base64.length} characters`);
         let data : any = {"filename": filename, "base64": base64};
-        this.pm4pyServ.uploadLog(data, new HttpParams()).subscribe(data => {
+        this.pm4pyServ.uploadLog(data).subscribe(data => {
           let responseJson : JSON = data as JSON;
 
           this.dialog.closeAll();
@@ -291,8 +308,14 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
             //window.location.reload();
           }
           else {
+            console.log('Upload error response:', responseJson);
             alert("Something has gone wrong in the upload!");
           }
+        },
+        (error) => {
+          console.log('Upload error:', error);
+          alert('Something has gone wrong in the upload!');
+          this.dialog.closeAll();
         })
       }
     }
